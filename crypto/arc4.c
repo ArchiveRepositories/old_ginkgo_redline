@@ -117,6 +117,7 @@ static int ecb_arc4_crypt(struct blkcipher_desc *desc, struct scatterlist *dst,
 
 static struct crypto_alg arc4_algs[2] = { {
 	.cra_name		=	"arc4",
+	.cra_driver_name	=	"arc4-generic",
 	.cra_flags		=	CRYPTO_ALG_TYPE_CIPHER,
 	.cra_blocksize		=	ARC4_BLOCK_SIZE,
 	.cra_ctxsize		=	sizeof(struct arc4_ctx),
@@ -130,25 +131,21 @@ static struct crypto_alg arc4_algs[2] = { {
 			.cia_decrypt		=	arc4_crypt_one,
 		},
 	},
-}, {
-	.cra_name		=	"ecb(arc4)",
-	.cra_priority		=	100,
-	.cra_flags		=	CRYPTO_ALG_TYPE_BLKCIPHER,
-	.cra_blocksize		=	ARC4_BLOCK_SIZE,
-	.cra_ctxsize		=	sizeof(struct arc4_ctx),
-	.cra_alignmask		=	0,
-	.cra_type		=	&crypto_blkcipher_type,
-	.cra_module		=	THIS_MODULE,
-	.cra_u			=	{
-		.blkcipher = {
-			.min_keysize	=	ARC4_MIN_KEY_SIZE,
-			.max_keysize	=	ARC4_MAX_KEY_SIZE,
-			.setkey		=	arc4_set_key,
-			.encrypt	=	ecb_arc4_crypt,
-			.decrypt	=	ecb_arc4_crypt,
-		},
-	},
-} };
+};
+
+static struct skcipher_alg arc4_skcipher = {
+	.base.cra_name		=	"ecb(arc4)",
+	.base.cra_driver_name	=	"ecb(arc4)-generic",
+	.base.cra_priority	=	100,
+	.base.cra_blocksize	=	ARC4_BLOCK_SIZE,
+	.base.cra_ctxsize	=	sizeof(struct arc4_ctx),
+	.base.cra_module	=	THIS_MODULE,
+	.min_keysize		=	ARC4_MIN_KEY_SIZE,
+	.max_keysize		=	ARC4_MAX_KEY_SIZE,
+	.setkey			=	arc4_set_key_skcipher,
+	.encrypt		=	ecb_arc4_crypt,
+	.decrypt		=	ecb_arc4_crypt,
+};
 
 static int __init arc4_init(void)
 {
