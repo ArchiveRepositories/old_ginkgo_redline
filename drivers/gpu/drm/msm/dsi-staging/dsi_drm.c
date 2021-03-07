@@ -91,7 +91,7 @@ static void convert_to_dsi_mode(const struct drm_display_mode *drm_mode,
 		dsi_mode->dsi_mode_flags |= DSI_MODE_FLAG_DMS;
 	if (msm_is_mode_seamless_vrr(drm_mode))
 		dsi_mode->dsi_mode_flags |= DSI_MODE_FLAG_VRR;
-	if (msm_is_mode_seamless_poms(drm_mode))
+	if (msm_is_mode_seamless_dms(drm_mode))
 		dsi_mode->dsi_mode_flags |= DSI_MODE_FLAG_POMS;
 	if (msm_is_mode_seamless_dyn_clk(drm_mode))
 		dsi_mode->dsi_mode_flags |= DSI_MODE_FLAG_DYN_CLK;
@@ -143,7 +143,7 @@ void dsi_convert_to_drm_mode(const struct dsi_display_mode *dsi_mode,
 	if (dsi_mode->dsi_mode_flags & DSI_MODE_FLAG_VRR)
 		drm_mode->private_flags |= MSM_MODE_FLAG_SEAMLESS_VRR;
 	if (dsi_mode->dsi_mode_flags & DSI_MODE_FLAG_POMS)
-		drm_mode->private_flags |= MSM_MODE_FLAG_SEAMLESS_POMS;
+		drm_mode->private_flags |= DSI_MODE_FLAG_SEAMLESS;
 	if (dsi_mode->dsi_mode_flags & DSI_MODE_FLAG_DYN_CLK)
 		drm_mode->private_flags |= MSM_MODE_FLAG_SEAMLESS_DYN_CLK;
 
@@ -337,7 +337,7 @@ static void dsi_bridge_disable(struct drm_bridge *bridge)
 
 	if (display && display->drm_conn) {
 		display->poms_pending =
-			private_flags & MSM_MODE_FLAG_SEAMLESS_POMS;
+			private_flags & DSI_MODE_FLAG_SEAMLESS;
 		sde_connector_helper_bridge_disable(display->drm_conn);
 	}
 

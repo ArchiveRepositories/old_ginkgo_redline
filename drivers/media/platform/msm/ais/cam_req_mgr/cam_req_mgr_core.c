@@ -2267,7 +2267,7 @@ static int cam_req_mgr_process_trigger(void *priv, void *data)
 			trigger_data->req_id);
 		if (idx >= 0) {
 			if (idx == in_q->last_applied_idx) {
-				CAM_DBG(CAM_REQ,
+				CAM_INFO(CAM_REQ,
 				"Reset last applied idx (%d) from req_id %llu",
 				in_q->last_applied_idx, trigger_data->req_id);
 				in_q->last_applied_idx = -1;
@@ -2298,7 +2298,7 @@ static int cam_req_mgr_process_trigger(void *priv, void *data)
 					}
 				}
 #endif
-				CAM_DBG(CAM_REQ,
+				CAM_INFO(CAM_REQ,
 				"Increment rd_idx %d from req_id %llu",
 				in_q->rd_idx,
 				trigger_data->req_id);

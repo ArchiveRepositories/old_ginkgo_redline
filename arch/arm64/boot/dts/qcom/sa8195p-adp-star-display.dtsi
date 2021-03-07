@@ -45,6 +45,10 @@
 	qcom,dp-hpd-gpio = <&ioexp 8 0>;
 	qcom,mst-fixed-topology-ports = <1 2>;
 
+	pinctrl-names = "mdss_dp0_active", "mdss_dp0_sleep";
+	pinctrl-0 = <&dp0_hpd_cfg_pins>;
+	pinctrl-1 = <&dp0_hpd_cfg_pins>;
+
 	qcom,core-supply-entries {
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -63,6 +67,10 @@
 	qcom,ext-disp = <&ext_disp>;
 	qcom,dp-hpd-gpio = <&ioexp 9 0>;
 
+	pinctrl-names = "mdss_dp1_active", "mdss_dp1_sleep";
+	pinctrl-0 = <&dp1_hpd_cfg_pins>;
+	pinctrl-1 = <&dp1_hpd_cfg_pins>;
+
 	qcom,core-supply-entries {
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -80,6 +88,10 @@
 &sde_edp {
 	qcom,ext-disp = <&ext_disp>;
 	qcom,dp-hpd-gpio = <&ioexp 11 0>;
+
+	pinctrl-names = "mdss_edp_active", "mdss_edp_sleep";
+	pinctrl-0 = <&edp_hpd_cfg_pins>;
+	pinctrl-1 = <&edp_hpd_cfg_pins>;
 
 	qcom,core-supply-entries {
 		#address-cells = <1>;
@@ -346,4 +358,5 @@
 				"none", "none";
 	qcom,sde-mixer-display-pref = "primary", "none", "none",
 				"none", "none", "none";
+	connectors = <&dsi_dp1 &dsi_dp2 &sde_dp0 &sde_dp1 &sde_edp &sde_wb>;
 };

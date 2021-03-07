@@ -27,6 +27,7 @@
 #include <linux/of_platform.h>
 #include <linux/pm_opp.h>
 #include <linux/regulator/consumer.h>
+#include <linux/completion.h>
 
 #include "clk.h"
 
@@ -3459,6 +3460,22 @@ void clock_debug_print_enabled(bool print_parent)
 }
 EXPORT_SYMBOL_GPL(clock_debug_print_enabled);
 
+static DECLARE_COMPLETION(clk_debug_init_start);
+
+static int __init clk_debug_init_sync(void)
+{
+	complete(&clk_debug_init_start);
+	return 0;
+}
+late_initcall(clk_debug_init_sync);
+
+static int __init clk_debug_init_wait(void)
+{
+	wait_for_completion(&clk_debug_init_start);
+	return 0;
+}
+early_init(clk_debug_init_wait, EARLY_SUBSYS_5, EARLY_INIT_LEVEL6);
+
 /**
  * clk_debug_init - lazily populate the debugfs clk directory
  *
@@ -3522,7 +3539,7 @@ static int __init clk_debug_init(void)
 
 	return 0;
 }
-late_initcall(clk_debug_init);
+early_late_initcall(clk_debug_init, EARLY_SUBSYS_5, EARLY_INIT_LEVEL7);
 #else
 static inline int clk_debug_register(struct clk_core *core) { return 0; }
 static inline void clk_debug_reparent(struct clk_core *core,

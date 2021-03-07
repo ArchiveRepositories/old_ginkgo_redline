@@ -250,6 +250,9 @@ struct sde_kms {
 	int dp_display_count;
 	void **dp_displays;
 	int dp_stream_count;
+	int dp_bond_count;
+
+	void *dp_bond_mgr;
 
 	bool has_danger_ctrl;
 
@@ -466,7 +469,7 @@ void *sde_debugfs_get_root(struct sde_kms *sde_kms);
  * These functions/definitions allow for building up a 'sde_info' structure
  * containing one or more "key=value\n" entries.
  */
-#define SDE_KMS_INFO_MAX_SIZE	4096
+#define SDE_KMS_INFO_MAX_SIZE	(4096 * 3)
 
 /**
  * struct sde_kms_info - connector information structure container

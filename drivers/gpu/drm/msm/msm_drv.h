@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2016-2020, The Linux Foundation. All rights reserved.
- * Copyright (C) 2019 XiaoMi, Inc.
  * Copyright (C) 2013 Red Hat
  * Author: Rob Clark <robdclark@gmail.com>
  *
@@ -134,6 +133,7 @@ enum msm_mdp_plane_property {
 	PLANE_PROP_SRC_CONFIG,
 	PLANE_PROP_FB_TRANSLATION_MODE,
 	PLANE_PROP_MULTIRECT_MODE,
+	PLANE_PROP_LAYOUT,
 
 	/* total # of properties */
 	PLANE_PROP_COUNT
@@ -167,6 +167,7 @@ enum msm_mdp_crtc_property {
 	CRTC_PROP_IDLE_TIMEOUT,
 	CRTC_PROP_DEST_SCALER,
 	CRTC_PROP_CAPTURE_OUTPUT,
+	CRTC_PROP_ROI_MISR,
 
 	CRTC_PROP_IDLE_PC_STATE,
 
@@ -209,7 +210,7 @@ enum msm_mdp_conn_property {
 	CONNECTOR_PROP_COUNT
 };
 
-#define MAX_H_TILES_PER_DISPLAY 2
+#define MAX_H_TILES_PER_DISPLAY 3
 
 /**
  * enum msm_display_compression_type - compression method used for pixel stream
