@@ -20,6 +20,22 @@
 #define IPA_LOCK() mutex_lock(&eth_ipa_ctx.ipa_lock)
 #define IPA_UNLOCK() mutex_unlock(&eth_ipa_ctx.ipa_lock)
 
+static char * const IPA_OFFLOAD_EVENT_string[] = {
+	"EV_INVALID",
+	"EV_DEV_OPEN",
+	"EV_DEV_CLOSE",
+	"EV_IPA_READY",
+	"EV_IPA_UC_READY",
+	"EV_PHY_LINK_UP",
+	"EV_PHY_LINK_DOWN",
+	"EV_DPM_SUSPEND",
+	"EV_DPM_RESUME",
+	"EV_USR_SUSPEND",
+	"EV_USR_RESUME",
+	"EV_IPA_OFFLOAD_MAX"
+};
+
+
 #define GET_VALUE(data, lbit, lbit2, hbit) ((data >> lbit) & \
 		(~(~0 << (hbit - lbit2 + 1))))
 

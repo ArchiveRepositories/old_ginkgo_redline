@@ -106,6 +106,10 @@
 					0x82000 0x82400>;
 		qcom,sde-dsc-size = <0x140>;
 
+		qcom,sde-roi-misr-off = <0x82820 0x82880 0x828e0
+					0x82940 0x829a0 0x82a00>;
+		qcom,sde-roi-misr-size = <0x60>;
+
 		qcom,sde-dither-off = <0x30e0 0x30e0 0x30e0
 							0x30e0 0x30e0 0x30e0>;
 		qcom,sde-dither-version = <0x00010000>;
@@ -258,6 +262,7 @@
 			qcom,sde-dspp-gamut = <0x1000 0x00040001>;
 			qcom,sde-dspp-pcc = <0x1700 0x00040000>;
 			qcom,sde-dspp-gc = <0x17c0 0x00010008>;
+			qcom,sde-dspp-roi-misr = <0x1200 0x00010000>;
 		};
 
 		qcom,platform-supply-entries {
@@ -619,7 +624,6 @@
 		qcom,phy-index = <0>;
 
 		qcom,bond-dual-ctrl = <1 0>;
-		qcom,bond-tri-ctrl = <2 0 1>;
 
 		reg = <0xae90000 0x0dc>,
 			<0xae90200 0x0c0>,
@@ -770,15 +774,13 @@
 			 <&clock_dispcc DISP_CC_MDSS_DP_PIXEL1_CLK_SRC>,
 			 <&mdss_dp1_pll DP_VCO_DIVIDED_CLK_SRC_MUX>,
 			 <&clock_dispcc DISP_CC_MDSS_DP_PIXEL2_CLK>,
-			 <&clock_dispcc DISP_CC_MDSS_DP_PIXEL1_CLK>,
-			 <&mdss_dp2_pll DP_VCO_DIVIDED_CLK_SRC_MUX>;
+			 <&clock_dispcc DISP_CC_MDSS_DP_PIXEL1_CLK>;
 		clock-names = "core_aux_clk", "core_usb_ref_clk_src",
 			"core_usb_ref_clk", "core_usb_pipe_clk",
 			"link_clk", "link_iface_clk",
 			"crypto_clk", "pixel_clk_rcg", "pixel_parent",
 			"pixel1_clk_rcg", "pixel1_parent",
-			"strm0_pixel_clk", "strm1_pixel_clk",
-			"bond_pixel_parent";
+			"strm0_pixel_clk", "strm1_pixel_clk";
 
 		qcom,phy-version = <0x420>;
 		qcom,phy-mode = "dp";
@@ -878,13 +880,11 @@
 			 <&clock_dispcc DISP_CC_MDSS_EDP_LINK_INTF_CLK>,
 			 <&clock_dispcc DISP_CC_MDSS_EDP_PIXEL_CLK_SRC>,
 			 <&mdss_edp_pll DP_VCO_DIVIDED_CLK_SRC_MUX>,
-			 <&clock_dispcc DISP_CC_MDSS_EDP_PIXEL_CLK>,
-			 <&mdss_dp2_pll DP_VCO_DIVIDED_CLK_SRC_MUX>;
+			 <&clock_dispcc DISP_CC_MDSS_EDP_PIXEL_CLK>;
 		clock-names = "core_aux_clk", "core_ref_clk",
 			"link_clk", "link_iface_clk",
 			"pixel_clk_rcg", "pixel_parent",
-			"strm0_pixel_clk",
-			"bond_pixel_parent";
+			"strm0_pixel_clk";
 
 		qcom,phy-version = <0x500>;
 		qcom,phy-mode = "edp";
@@ -903,7 +903,6 @@
 
 		qcom,dsc-feature-enable;
 		qcom,fec-feature-enable;
-		qcom,widebus-enable;
 		qcom,max-dp-dsc-blks = <2>;
 		qcom,max-dp-dsc-input-width-pixs = <2048>;
 

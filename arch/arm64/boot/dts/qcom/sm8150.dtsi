@@ -776,6 +776,12 @@
 	};
 };
 
+&soc {
+	early_devices: early-devices {
+		compatible = "qcom,early-devices";
+	};
+};
+
 #include "sm8150-gdsc.dtsi"
 
 #include "sm8150-sde-pll.dtsi"
@@ -1563,7 +1569,7 @@
 		compatible = "qcom,clk-led-pwm";
 		qcom,label = "led_clk_gp2";
 		clocks = <&clock_gcc GCC_GP2_CLK>;
-		clock-names = "core";
+		clock-names = "src_clk";
 		assigned-clocks = <&clock_gcc GCC_GP2_CLK>;
 		assigned-clock-rates = <80000>;
 		qcom,max_duty = <53>;

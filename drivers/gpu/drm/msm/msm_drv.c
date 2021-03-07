@@ -2223,6 +2223,7 @@ static int __init msm_drm_register(void)
 	if (!modeset)
 		return -EINVAL;
 
+	place_marker("M - DISPLAY Driver Init");
 	DBG("init");
 	msm_smmu_driver_init();
 	msm_dsi_register();
@@ -2243,7 +2244,7 @@ static void __exit msm_drm_unregister(void)
 	msm_smmu_driver_cleanup();
 }
 
-module_init(msm_drm_register);
+early_module_init(msm_drm_register, EARLY_SUBSYS_2, EARLY_INIT_LEVEL4);
 module_exit(msm_drm_unregister);
 
 MODULE_AUTHOR("Rob Clark <robdclark@gmail.com");
