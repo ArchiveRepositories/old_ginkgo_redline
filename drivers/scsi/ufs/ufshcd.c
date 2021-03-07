@@ -8271,9 +8271,9 @@ static int ufshcd_scsi_add_wlus(struct ufs_hba *hba)
 			NULL);
 
 		if (IS_ERR(sdev_boot)) {
+			ret = PTR_ERR(sdev_boot);
 			dev_err(hba->dev, "%s: failed adding BOOT_WLUN. ret %d\n",
 				__func__, ret);
-			ret = PTR_ERR(sdev_boot);
 			goto remove_sdev_ufs_device;
 		}
 		scsi_device_put(sdev_boot);
@@ -8284,9 +8284,9 @@ static int ufshcd_scsi_add_wlus(struct ufs_hba *hba)
 			ufshcd_upiu_wlun_to_scsi_wlun(UFS_UPIU_RPMB_WLUN),
 			NULL);
 		if (IS_ERR(sdev_rpmb)) {
+			ret = PTR_ERR(sdev_rpmb);
 			dev_err(hba->dev, "%s: failed adding RPMB_WLUN. ret %d\n",
 				__func__, ret);
-			ret = PTR_ERR(sdev_rpmb);
 			goto remove_sdev_boot;
 		}
 		scsi_device_put(sdev_rpmb);
@@ -9414,8 +9414,7 @@ static inline int ufshcd_config_vreg_lpm(struct ufs_hba *hba,
 	else if (vreg->unused)
 		return 0;
 	else
-		return ufshcd_config_vreg_load(hba->dev, vreg,
-					       UFS_VREG_LPM_LOAD_UA);
+		return ufshcd_config_vreg_load(hba->dev, vreg, vreg->min_uA);
 }
 
 static inline int ufshcd_config_vreg_hpm(struct ufs_hba *hba,
